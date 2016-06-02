@@ -1,0 +1,149 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>awsiot-mqtt-scala</groupId>
+  <artifactId>awsiot-mqtt-scala</artifactId>
+  <version>0.1</version>
+  <name>awsiot-mqtt-scala</name>
+  <description>AWS IOT MQTT Scala</description>
+  
+  <properties>
+  	<scala.tools.version>2.10</scala.tools.version>
+  	<scala.base.version>2.10</scala.base.version>
+  	<scala.full.version>2.10.3</scala.full.version>
+  	<scalding.version>0.11.0</scalding.version>
+  	<slf4j.log4j12.version>1.7.5</slf4j.log4j12.version>
+  </properties>
+  
+  <repositories>
+	<repository>
+		<id>maven.org</id>
+		<url>http://repo2.maven.org/maven2/</url>
+	</repository>
+	<repository>
+        <id>Eclipse Paho Repo</id>
+        <url>https://repo.eclipse.org/content/repositories/paho-releases/</url>
+    </repository>	
+	<repository>
+		<name>Clojure Maven Repo</name>
+	    <id>clojars.org</id>
+	    <url>http://clojars.org/repo</url>
+	 </repository>	
+	<repository>
+		<id>scala-tools.org</id>
+		<name>Scala-tools Maven2 Repository</name>
+		<url>http://scala-tools.org/repo-releases</url>
+	</repository>
+  </repositories>
+  
+  <dependencies>
+  	<dependency>
+		<groupId>org.bouncycastle</groupId>
+		<artifactId>bcpkix-jdk15on</artifactId>
+		<version>1.52</version>
+	</dependency>
+		
+	<dependency>
+		<groupId>org.bouncycastle</groupId>
+		<artifactId>bcprov-jdk15on</artifactId>
+		<version>1.52</version>
+	</dependency>
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-simple</artifactId>
+        <version>${slf4j.log4j12.version}</version>
+    </dependency>
+  	
+  	<dependency>
+        <groupId>org.scala-lang</groupId>
+        <artifactId>scala-library</artifactId>
+        <version>${scala.full.version}</version>
+    </dependency>
+  	<dependency>
+        <groupId>org.scala-lang</groupId>
+        <artifactId>scala-compiler</artifactId>
+        <version>${scala.full.version}</version>
+        <scope>compile</scope>
+    </dependency>
+   	<dependency>
+		<groupId>org.apache.spark</groupId>
+		<artifactId>spark-core_2.10</artifactId>
+		<version>1.6.0</version>
+	</dependency>   
+	<dependency>
+	        <groupId>org.eclipse.paho</groupId>
+	        <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+	        <version>1.0.2</version>
+    	</dependency>
+  </dependencies>
+  
+  <build>
+    <sourceDirectory>src/main/scala</sourceDirectory>
+    <testSourceDirectory>src/test/scala</testSourceDirectory>
+    
+    <plugins>
+	  <plugin>
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>scala-maven-plugin</artifactId>
+        <version>3.1.6</version>
+        <executions>
+          <execution>
+          	<phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+              <goal>testCompile</goal>
+            </goals>
+            <configuration>
+              <args>
+                <arg>-make:transitive</arg>
+                <arg>-dependencyfile</arg>
+                <arg>${project.build.directory}/.scala_dependencies</arg>
+              </args>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      
+      <!-- Fat Jar -->
+	  <plugin>
+		<artifactId>maven-assembly-plugin</artifactId>
+		<version>2.4</version>
+		<configuration>
+			<appendAssemblyId>false</appendAssemblyId>
+			<descriptorRefs>
+				<descriptorRef>jar-with-dependencies</descriptorRef>
+			</descriptorRefs>
+			<archive>
+				<manifest>
+					<mainClass>com.esri.geoevent.transport.awsiotmqtt.Run</mainClass>
+				</manifest>
+			</archive>
+		</configuration>
+		<executions>
+			<execution>
+				<id>make-assembly</id>
+				<phase>package</phase>
+				<goals>
+					<goal>single</goal>
+				</goals>
+			</execution>
+		</executions>
+	  </plugin>
+	  
+	  <!-- For Test -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.13</version>
+        <configuration>
+          <useFile>false</useFile>
+          <disableXmlReport>true</disableXmlReport>
+          <includes>
+            <include>**/*Test.*</include>
+            <include>**/*Suite.*</include>
+          </includes>
+        </configuration>
+      </plugin>
+      
+    </plugins>
+  </build>
+</project>
