@@ -4,16 +4,24 @@ awsiot publisher-consumer in scala
 1. Configure AWSIot certificates in resource\application.conf
 
 	awsiot {
-		endpoint = "xxxxxxx.iot.us-west-2.amazonaws.com"
+
+		endpoint = "xxxxxxx.iot.us-west-2.amazonaws.com" 
+
 		port = "8883"
+
 		protocol = "ssl://"
+
 		qos = "0"
+
 		rootCA = "C:/certs/rootCA.pem"
+
 		privateKey = "C:/certs/private.pem"
+
 		certificate = "C:/certs/cert.pem"
+
 	}
 
-	<a href="http://docs.aws.amazon.com/iot/latest/developerguide/identity-in-iot.html">AWS Iot Security</a>
+	<a href="http://docs.aws.amazon.com/iot/latest/developerguide/identity-in-iot.html" target="_blank">AWS Iot Security</a>
 
 2. Build, mvn clean package
 
