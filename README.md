@@ -7,13 +7,13 @@ awsiot publisher-consumer in scala
 	awsiot 
 	{
 	
-		endpoint = "xxxxxxx.iot.us-west-2.amazonaws.com" 
+		endpoint = "xxxxxxx.iot.us-west-2.amazonaws.com"  // broker address
 	
 		port = "8883"
 	
-		protocol = "ssl://"
+		protocol = "ssl://" //protocol
 
-		qos = "0"
+		qos = "0"  //quality of service
 
 		rootCA = "C:/certs/rootCA.pem"
 
