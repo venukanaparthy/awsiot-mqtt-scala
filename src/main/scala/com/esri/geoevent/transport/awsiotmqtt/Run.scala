@@ -31,7 +31,7 @@ object Run {
       subscriber.execute(params, topic)      
     }else {
       printUsage()
-    }
+    }    
   }
   
   def printUsage():Unit = {
